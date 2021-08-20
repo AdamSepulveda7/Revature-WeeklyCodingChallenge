@@ -5,48 +5,53 @@ namespace WordBucket
 {
     class Program
     {
-         static List<string> bucketize(string str, int numOfChar)
+        static List<string> bucketize(string str, int numOfChar)
         {
-            //string[] result = new string[]{};
             List<string> result = new List<string>();
             str = str.Trim();
 
-            int arrSize = 0;
             int counter = 0;
             string tempWord = "";
             string tempStr = "";
 
-            for(int i = 0; i<str.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
-                
-                //string subStr = str.Substring(0,10);
-                //result = subStr.Split();
-                if(str[i] == ' ')
+                if (str[i] == ' ')
                 {
                     tempStr += tempWord + " ";
                     tempWord = "";
                 }
-                else if(str[i]==str.Length-1)
+                else if (i == str.Length - 1 && str[i - 1] != ' ')
                 {
-                    System.Console.WriteLine("dsdsdsd");
+                    tempWord += str[i];
+                    tempStr += tempWord + " ";
+                    result.Add(tempStr + ' ');
+                }
+                else if (i == str.Length - 1 && str[i - 1] == ' ')
+                {
+                    tempWord += str[i];
+                    result.Add(tempStr + ' ');
+                    tempStr = "";
+                    tempStr += tempWord + " ";
                 }
                 else
                 {
                     tempWord += str[i];
                 }
-                
-                if(counter==10)
-                {
-                    //result[arrSize] = tempStr;
-                    result.Add(tempStr+' ');
-                    tempStr = "";
-                    counter=0;
-                }
                 counter++;
+                
+                if (counter == numOfChar + 1)
+                {
+                    if(tempWord.Length>numOfChar)
+                    {
+                        tempWord = "";
+                    }
+                    result.Add(tempStr + ' ');
+                    tempStr = "";
+                    counter = tempWord.Length;
+                }
             }
-            //result.Add(str);
-            //Console.WriteLine(result.);
-            foreach(string s in result)
+            foreach (string s in result)
             {
                 System.Console.WriteLine(s);
             }
@@ -54,10 +59,11 @@ namespace WordBucket
         }
         static void Main(string[] args)
         {
-            string str = "she sells sea shells by the sea     ";
-            int numOfChar = 10;
-            bucketize(str, numOfChar); 
-            
+            bucketize("she sells sea shells by the sea", 10);
+            bucketize("the mouse jumped over the cheese", 7);
+            bucketize("fairy dust coated the air", 20);
+            bucketize("a b c d e", 2);
+
         }
     }
 }
