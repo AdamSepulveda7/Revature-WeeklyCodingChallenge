@@ -1,0 +1,22 @@
+--A)
+Select FIRST_NAME, LAST_NAME
+From Worker
+Where SALARY >= 50000 AND SALARY <= 100000
+
+--B)
+Select Count(WORKER_ID)
+From Worker
+Group by Department
+Order by Count(WORKER_ID) DESC
+
+--C)
+Select * 
+From Worker w Left Join Bonus b 
+On w.WORKER_ID = WORKER_REF_ID
+
+--D)
+SELECT *
+From Worker w
+Order By SALARY ASC
+OFFSET 0 ROWS
+Fetch First 5 Rows Only
